@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import re
+import tensorflow as tf
 
 def data2char_index(X, max_len, is_remove_comment = False):
     alphabet = " abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:'\"/\\|_@#$%^&*~`+-=<>()[]{}"
@@ -13,9 +14,8 @@ def data2char_index(X, max_len, is_remove_comment = False):
                 continue
             mat.append(alphabet.index(ch))
         result.append(mat)
-    result_np = np.array(result, dtype=object).astype(np.float32)
-    X_char = np.pad(result_np,(0,max_len-len(result_np[0])), 'constant')
-    return X_char[0]
+    X_char = tf.keras.preprocessing.sequence.pad_sequences(np.array(result, dtype=object), padding='post',truncating='post', maxlen=max_len)
+    return X_char
 
 def data_to_symbol_tag(X, max_len ,is_remove_comment = False):
     symbol = " -,;.!?:'\"/\\|_@#$%^&*~`+-=<>()[]{}"
@@ -29,6 +29,5 @@ def data_to_symbol_tag(X, max_len ,is_remove_comment = False):
             else :
                 mat.append(symbol.index(ch))
         result.append(mat)
-    result_np = np.array(result, dtype=object).astype(np.float32)
-    X_char = np.pad(result_np,(0,max_len-len(result_np[0])), 'constant')
-    return X_char[0]
+    X_char = tf.keras.preprocessing.sequence.pad_sequences(np.array(result, dtype=object), padding='post',truncating='post', maxlen=max_len)
+    return X_char
