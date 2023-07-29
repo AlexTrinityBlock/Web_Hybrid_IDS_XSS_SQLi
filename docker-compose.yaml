@@ -1,0 +1,9 @@
+version: "3"
+services:
+  ids:
+    build: ./dockerfiles/ids
+    image: web_hybrid_ids_xss_sqli
+    volumes:
+      - ./codes/ids:/app
+    tty: true
+    command: sh
