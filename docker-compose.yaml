@@ -6,4 +6,6 @@ services:
     volumes:
       - ./codes/ids:/app
     tty: true
+    ports:
+      - 8000:80
     command: sh

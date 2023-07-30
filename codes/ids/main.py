@@ -1,19 +1,36 @@
-import pandas as pd
-import numpy as np
-import re
-from encode_utils import data2char_index,data_to_symbol_tag
-import tensorflow as tf
-from tensorflow import keras
+from typing import Union
+from fastapi import FastAPI
+from ids_model import IDSModel
+from fastapi import FastAPI, Response, status
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
-model = keras.models.load_model("./model.h5", compile=False)
+# Cors
+app = FastAPI()
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
+#Load model
+model = IDSModel()
 
-text = 'Peter Or ally'
-input_text = data2char_index([text],max_len=1000)
-input_symbol = data_to_symbol_tag([text],max_len=1000)
+# Text model
+class InputText(BaseModel):
+    text: str
 
-pred = model.predict([input_text,input_symbol])
+@app.get("/")
+def read_root():
+    return {"message": "This is the IDS API"}
 
-sf = tf.nn.softmax(pred[0])
-
-print(sf)
+@app.post("/detect/")
+def detect(text: InputText,response: Response):
+    if len(text.text) > 1000:
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        return {"error": "Text is too long"}    
+    result = model.predict(text.text)    
+    return result
