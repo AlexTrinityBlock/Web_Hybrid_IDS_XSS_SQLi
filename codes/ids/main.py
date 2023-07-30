@@ -28,9 +28,6 @@ def read_root():
 
 # Detection SQL injection and XSS
 @app.post("/detect/")
-def detect(text: IDSInputFormat, response: Response):
-    if len(text.text) > 1000:
-        response.status_code = status.HTTP_400_BAD_REQUEST
-        return {"error": "Text is too long"}
+def detect(text: IDSInputFormat):
     result = ids_model.predict(text.text)
     return result

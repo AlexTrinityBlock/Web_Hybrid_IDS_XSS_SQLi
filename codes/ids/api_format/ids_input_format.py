@@ -1,5 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 # Text model
 class IDSInputFormat(BaseModel):
-    text: str
+    text: str = Field(..., max_length=1000)
