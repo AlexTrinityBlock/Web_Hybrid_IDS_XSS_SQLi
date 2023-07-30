@@ -1,13 +1,14 @@
 from utils.encode_utils import data2char_index, data_to_symbol_tag
 import tensorflow as tf
 from tensorflow import keras
-import os 
+import os
 
 
 class IDSModelController:
     def __init__(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        self.model = keras.models.load_model(dir_path+"/../ml_models/model.h5", compile=False)
+        self.model = keras.models.load_model(
+            dir_path+"/../ml_models/model.h5")
 
     def predict(self, text: str) -> dict:
 

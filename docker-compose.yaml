@@ -8,4 +8,11 @@ services:
     tty: true
     ports:
       - 8000:80
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
     command: sh run.sh
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

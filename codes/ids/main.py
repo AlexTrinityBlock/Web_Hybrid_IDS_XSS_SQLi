@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from api_format.ids_input_format import IDSInputFormat
 
 
-# Cors
+# CORS
 app = FastAPI()
 origins = ["*"]
 app.add_middleware(
@@ -20,14 +20,13 @@ app.add_middleware(
 # Load model
 ids_model = IDSModelController()
 
-# URL
-
-
+# URLs
+# root
 @app.get("/")
 def read_root():
     return {"message": "This is the IDS API"}
 
-
+# Detection SQL injection and XSS
 @app.post("/detect/")
 def detect(text: IDSInputFormat, response: Response):
     if len(text.text) > 1000:
