@@ -3,7 +3,8 @@ from fastapi import FastAPI
 from ids_model import IDSModel
 from fastapi import FastAPI, Response, status
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from api_format.ids_input_format import IDSInputFormat
+
 
 # Cors
 app = FastAPI()
@@ -16,21 +17,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-#Load model
-model = IDSModel()
+# Load model
+ids_model = IDSModel()
 
-# Text model
-class InputText(BaseModel):
-    text: str
+# URL
 
 @app.get("/")
 def read_root():
     return {"message": "This is the IDS API"}
 
+
 @app.post("/detect/")
-def detect(text: InputText,response: Response):
+def detect(text: IDSInputFormat, response: Response):
     if len(text.text) > 1000:
         response.status_code = status.HTTP_400_BAD_REQUEST
-        return {"error": "Text is too long"}    
-    result = model.predict(text.text)    
+        return {"error": "Text is too long"}
+    result = ids_model.predict(text.text)
     return result

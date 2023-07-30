@@ -14,8 +14,8 @@ class IDSModel:
         pred = self.model.predict([input_text, input_symbol])
         softmax_result = tf.nn.softmax(pred[0])
         result = {
-            "SQLi": round(float(softmax_result[0]),3),
-            "XSS": round(float(softmax_result[1]),3),
-            "Benign": round(float(softmax_result[2]),3)                                     
+            "SQLi": round(float(softmax_result[0]), 3),
+            "XSS": round(float(softmax_result[1]), 3),
+            "Benign": round(float(softmax_result[2]), 3)
         }
         return result
