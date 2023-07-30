@@ -8,4 +8,4 @@ services:
     tty: true
     ports:
       - 8000:80
-    command: sh
+    command: sh run.sh
