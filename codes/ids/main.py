@@ -1,6 +1,6 @@
 from typing import Union
 from fastapi import FastAPI
-from ids_model import IDSModel
+from controllers.ids_model_controller import IDSModelController
 from fastapi import FastAPI, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from api_format.ids_input_format import IDSInputFormat
@@ -18,9 +18,10 @@ app.add_middleware(
 )
 
 # Load model
-ids_model = IDSModel()
+ids_model = IDSModelController()
 
 # URL
+
 
 @app.get("/")
 def read_root():
