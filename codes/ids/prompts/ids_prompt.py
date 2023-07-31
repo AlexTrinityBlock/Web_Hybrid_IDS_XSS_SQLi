@@ -1,4 +1,4 @@
-ids_prompt="""
+ids_prompt_1 = """
 Rule: Answer the question according to the example, let's think step by step, follow following format, using only the answers in the statement on Answering.
 Statement: True, False, Unknow, Not_enough_info
 
@@ -12,12 +12,14 @@ Question: Please identify signs of SQL injection or XSS from the given Scenario.
 Thinking: SQL Injection: The given text contains URL parameters that include the "id" and "word" fields. However, there are no SQL queries or database-related code present, so it is not possible to determine if there is a SQL injection vulnerability from this information.XSS (Cross-Site Scripting): The "word" parameter in the URL contains encoded HTML tags and JavaScript code. This could indicate an attempt to inject malicious scripts into the web page and potentially execute arbitrary code on the user's browser. Therefore, there is a potential sign of XSS vulnerability in this scenario.
 Answering: True
 
-Scenario: ara=maynet+oyun&sayfala=4&goster="><script>alert(document.cookie)</sc<br/>ript>
+Scenario: 
+"""
+
+ids_prompt_2 = """
 Question: Please identify signs of SQL injection or XSS from the given Scenario.
 Thinking: 
 """
 
-def get_prompt():
-    return ids_prompt
 
-print(get_prompt())
+def get_prompt(user_input: str):
+    return ids_prompt_1 + user_input + ids_prompt_2
