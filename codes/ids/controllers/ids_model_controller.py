@@ -10,8 +10,7 @@ class IDSModelController:
         self.model = keras.models.load_model(
             dir_path+"/../ml_models/model.h5")
 
-    def predict(self, text: str) -> dict:
-
+    def predict_attack_type(self, text: str) -> dict:
         input_text = data2char_index([text], max_len=1000)
         input_symbol = data_to_symbol_tag([text], max_len=1000)
         pred = self.model.predict([input_text, input_symbol])

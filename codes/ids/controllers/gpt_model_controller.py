@@ -1,26 +1,21 @@
 import os
 import openai
 import typing
-
+from prompts.ids_prompt import get_prompt
 
 class GPTModelController:
     def __init__(self):
         openai.api_key = os.getenv("OPENAI_API_KEY")
 
-    def system(self):
-        return """
-        模仿人類的語氣回應我
-        """
-
     def message(self, input_text: str):
         return [
             {
                 "role": "system",
-                "content": self.system()
+                "content": ""
             },
             {
                 "role": "user",
-                "content": input_text
+                "content": get_prompt() + input_text
             }
         ]
 

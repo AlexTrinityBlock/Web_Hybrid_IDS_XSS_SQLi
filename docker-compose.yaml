@@ -7,7 +7,7 @@ services:
       - ./codes/ids:/app
     tty: true
     ports:
-      - 8000:80
+      - 80:80
     environment:
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

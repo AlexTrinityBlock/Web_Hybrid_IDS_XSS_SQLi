@@ -22,12 +22,16 @@ ids_model = IDSModelController()
 
 # URLs
 # root
-@app.get("/")
+
+
+@app.get("/", tags=["root"])
 def read_root():
     return {"message": "This is the IDS API"}
 
 # Detection SQL injection and XSS
-@app.post("/detect/")
+
+
+@app.post("/detect/", tags=["ids"])
 def detect(text: IDSInputFormat):
-    result = ids_model.predict(text.text)
+    result = ids_model.predict_attack_type(text.text)
     return result
