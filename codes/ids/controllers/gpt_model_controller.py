@@ -24,7 +24,7 @@ class GPTModelController:
             }
         ]
 
-    def predict_attack_type(self, input_text: str) -> str:
+    def predict_attack_type(self, input_text: str, from_ip: str) -> str:
         response = openai.ChatCompletion.create(
             model=GPT_MODEL_NAME,
             messages=self.message(input_text),
@@ -51,7 +51,8 @@ class GPTModelController:
                 result=result,
                 payload=input_text,
                 raw_gpt_response=string_result,
-                is_positive=result_bool
+                is_positive=result_bool,
+                from_ip=from_ip
             )
             return {
                 "result": result,

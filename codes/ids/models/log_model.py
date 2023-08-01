@@ -15,4 +15,5 @@ class LogModel(Base):
     model_type = Column(String, nullable=False)
     result = Column(String, nullable=False)
     raw_gpt_response = Column(String, nullable=True)
+    from_ip = Column(String, nullable=True)
     timestamp = Column(DateTime, default=datetime.datetime.now)

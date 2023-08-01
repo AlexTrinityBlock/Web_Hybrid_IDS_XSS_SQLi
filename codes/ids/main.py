@@ -50,7 +50,8 @@ def read_root():
 
 @app.post("/detect/hybrid", tags=["ids"])
 def detect(text: IDSInputFormat):
-    result = ids_model.predict_attack_type(text.text)
+    result = ids_model.predict_attack_type(
+        text=text.text, from_ip=text.from_ip)
     return result
 
 # Detection SQL injection and XSS with openai api gpt
@@ -59,7 +60,8 @@ def detect(text: IDSInputFormat):
 @app.post("/detect/gpt/", tags=["ids"])
 def detect_gpt(text: IDSInputFormat):
     gpt_model = GPTModelController()
-    result = gpt_model.predict_attack_type(text.text)
+    result = gpt_model.predict_attack_type(
+        input_text=text.text, from_ip=text.from_ip)
     return result
 
 # Detection SQL injection and XSS with local model
@@ -67,10 +69,13 @@ def detect_gpt(text: IDSInputFormat):
 
 @app.post("/detect/local/", tags=["ids"])
 def detect_local(text: IDSInputFormat):
-    result = local_model.predict_attack_type(text.text)
+    result = local_model.predict_attack_type(
+        text=text.text, from_ip=text.from_ip)
     return result
 
 # Read logs
+
+
 @app.get("/logs", tags=["logs"])
 def read_logs():
     log_controller = LogController()

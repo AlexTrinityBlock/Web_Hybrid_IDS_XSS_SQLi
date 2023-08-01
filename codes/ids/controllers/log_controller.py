@@ -12,7 +12,8 @@ class LogController:
                    is_positive: bool = None,
                    SQLi_probability: float = None,
                    XSS_probability: float = None, Benign_probability: float = None,
-                   raw_gpt_response: str = None
+                   raw_gpt_response: str = None,
+                   from_ip:str = None,
                    ):
         log_model = LogModel(is_positive=is_positive,
                              SQLi_probability=SQLi_probability,
@@ -22,6 +23,7 @@ class LogController:
                              result=result,
                              payload=payload,
                              raw_gpt_response=raw_gpt_response,
+                             from_ip=from_ip,
                              )
         print("Add model to DB")
         self.db.add(log_model)

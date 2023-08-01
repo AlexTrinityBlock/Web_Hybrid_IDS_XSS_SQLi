@@ -13,7 +13,7 @@ class LocalModelController:
         self.gpt_model_controller = GPTModelController()
         self.log_controller = LogController()
 
-    def predict_attack_type(self, text: str) -> dict:
+    def predict_attack_type(self, text: str, from_ip: str) -> dict:
         input_text = data2char_index([text], max_len=1000)
         input_symbol = data_to_symbol_tag([text], max_len=1000)
         pred = self.model.predict([input_text, input_symbol])
@@ -38,7 +38,7 @@ class LocalModelController:
             "model": LOCAL_MODEL_NAME,
             "SQLi_probability": SQLi_probability,
             "XSS_probability": XSS_probability,
-            "Benign_probability": Benign_probability
+            "Benign_probability": Benign_probability,
         }
 
         # Log
@@ -50,6 +50,7 @@ class LocalModelController:
             XSS_probability=XSS_probability,
             Benign_probability=Benign_probability,
             payload=text,
-            raw_gpt_response=""
+            raw_gpt_response="",
+            from_ip=from_ip,
         )
         return result
