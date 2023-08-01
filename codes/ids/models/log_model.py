@@ -8,6 +8,7 @@ class LogModel(Base):
     id = Column(Integer, primary_key=True, index=True,
                 unique=True, autoincrement=True)
     is_positive = Column(Boolean, nullable=True)
+    payload = Column(String, nullable=False)
     SQLi_probability = Column(Float, nullable=True)
     XSS_probability = Column(Float, nullable=True)
     Benign_probability = Column(Float, nullable=True)

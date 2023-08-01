@@ -4,12 +4,14 @@ from tensorflow import keras
 import os
 from config import ATTACK_THRESHOLD, BENIGN_THRESHOLD, LOCAL_MODEL_NAME
 from controllers.gpt_model_controller import GPTModelController
+from controllers.log_controller import LogController
 
 
 class LocalModelController:
     def __init__(self, model: keras.Model) -> None:
         self.model = model
         self.gpt_model_controller = GPTModelController()
+        self.log_controller = LogController()
 
     def predict_attack_type(self, text: str) -> dict:
         input_text = data2char_index([text], max_len=1000)
@@ -39,4 +41,15 @@ class LocalModelController:
             "Benign_probability": Benign_probability
         }
 
+        # Log
+        self.log_controller.create_log(
+            model_type=LOCAL_MODEL_NAME,
+            result=str(result_bool),
+            is_positive=result_bool,
+            SQLi_probability=SQLi_probability,
+            XSS_probability=XSS_probability,
+            Benign_probability=Benign_probability,
+            payload=text,
+            raw_gpt_response=""
+        )
         return result

@@ -8,6 +8,7 @@ class LogController:
 
     def create_log(self, model_type: str,
                    result: str,
+                   payload: str,
                    is_positive: bool = None,
                    SQLi_probability: float = None,
                    XSS_probability: float = None, Benign_probability: float = None,
@@ -19,6 +20,7 @@ class LogController:
                              Benign_probability=Benign_probability,
                              model_type=model_type,
                              result=result,
+                             payload=payload,
                              raw_gpt_response=raw_gpt_response,
                              )
         print("Add model to DB")
