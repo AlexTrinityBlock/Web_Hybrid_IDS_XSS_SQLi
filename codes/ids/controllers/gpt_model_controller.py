@@ -47,6 +47,6 @@ class GPTModelController:
             return {
                 "result": "Unknown",
                 "message": f"Unable to parse the GPT response.",
-                "raw_response": string_result,
+                "raw_gpt_response": string_result,
                 "model": GPT_MODEL_NAME
             }

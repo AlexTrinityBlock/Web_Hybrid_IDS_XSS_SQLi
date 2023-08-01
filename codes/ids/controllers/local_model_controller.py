@@ -34,9 +34,9 @@ class LocalModelController:
             "result": str(result_bool),
             "message": "Analyzing through a local model.",
             "model": LOCAL_MODEL_NAME,
-            "SQLi": SQLi_probability,
-            "XSS": XSS_probability,
-            "Benign": Benign_probability
+            "SQLi_probability": SQLi_probability,
+            "XSS_probability": XSS_probability,
+            "Benign_probability": Benign_probability
         }
 
         return result
