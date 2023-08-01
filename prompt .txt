@@ -1,3 +1,0 @@
-Rule: Answer the question according to the example, let's think step by step, follow following format, using only the answers in the statement on Answering.
-Statement: True, False, Unknow, Not_enough_info
-

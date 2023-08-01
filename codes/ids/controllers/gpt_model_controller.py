@@ -4,6 +4,7 @@ import typing
 from prompts.ids_prompt import get_prompt
 import yaml
 
+
 class GPTModelController:
     def __init__(self):
         openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -35,11 +36,5 @@ class GPTModelController:
         result = tmp_result.split(":")[1].replace(" ", "")
         return {
             "result": result,
-            "analysis": string_result,
+            "Message": string_result,
         }
-
-
-
-# gpt_model_controller = GPTModelController()
-# result = gpt_model_controller.predict_attack_type("生活的意義是什麼?")
-# print(result )
