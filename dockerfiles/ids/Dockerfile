@@ -12,3 +12,4 @@ RUN pip install typing-extensions==4.7.1
 RUN pip install gunicorn==21.2.0
 RUN pip install sqlalchemy==2.0.19
 RUN pip install openai==0.27.8
+RUN pip install SQLAlchemy==2.0.19
