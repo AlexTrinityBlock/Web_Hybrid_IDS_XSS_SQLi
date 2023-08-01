@@ -3,6 +3,7 @@ import openai
 import typing
 from prompts.ids_prompt import get_prompt
 import yaml
+from config import GPT_MODEL_NAME
 
 
 class GPTModelController:
@@ -23,18 +24,20 @@ class GPTModelController:
 
     def predict_attack_type(self, input_text: str) -> str:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model=GPT_MODEL_NAME,
             messages=self.message(input_text),
-            temperature=0.2,
+            temperature=0,
             max_tokens=2000,
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0
         )
         string_result = response["choices"][0]["message"]["content"]
+        print("GPT raw response: ", string_result)
         tmp_result = string_result.split("Answering")[1]
         result = tmp_result.split(":")[1].replace(" ", "")
         return {
             "result": result,
-            "Message": string_result,
+            "message": string_result,
+            "model": GPT_MODEL_NAME
         }

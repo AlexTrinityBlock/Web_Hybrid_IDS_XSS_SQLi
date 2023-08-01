@@ -1,10 +1,13 @@
 from typing import Union
 from fastapi import FastAPI
-from controllers.ids_model_controller import IDSModelController
+from controllers.hybrid_model_controller import IDSModelController
 from controllers.gpt_model_controller import GPTModelController
+from controllers.local_model_controller import LocalModelController
 from fastapi import FastAPI, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from api_format.ids_input_format import IDSInputFormat
+from tensorflow import keras
+import os
 
 
 # CORS
@@ -19,8 +22,11 @@ app.add_middleware(
 )
 
 # Load model
-ids_model = IDSModelController()
-
+dir_path = os.path.dirname(os.path.realpath(__file__))
+model = keras.models.load_model(
+    dir_path+"/ml_models/model.h5")
+ids_model = IDSModelController(model)
+local_model = LocalModelController(model)
 # URLs
 # root
 
@@ -29,18 +35,27 @@ ids_model = IDSModelController()
 def read_root():
     return {"message": "This is the IDS API"}
 
-# Detection SQL injection and XSS
+# Detection SQL injection and XSS with hybrid model
 
 
-@app.post("/detect/", tags=["ids"])
+@app.post("/detect/hybrid", tags=["ids"])
 def detect(text: IDSInputFormat):
     result = ids_model.predict_attack_type(text.text)
     return result
 
-# Call openai api
+# Detection SQL injection and XSS with openai api gpt
 
-@app.post("/detect-gpt/", tags=["ids"])
+
+@app.post("/detect/gpt/", tags=["ids"])
 def detect_gpt(text: IDSInputFormat):
     gpt_model = GPTModelController()
     result = gpt_model.predict_attack_type(text.text)
+    return result
+
+# Detection SQL injection and XSS with local model
+
+
+@app.post("/detect/local/", tags=["ids"])
+def detect_local(text: IDSInputFormat):
+    result = local_model.predict_attack_type(text.text)
     return result

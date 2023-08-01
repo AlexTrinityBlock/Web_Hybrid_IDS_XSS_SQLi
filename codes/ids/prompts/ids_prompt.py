@@ -1,4 +1,4 @@
-ids_prompt_1 = """
+example_prompt_1 = """
 Rule: Answer the question according to the example, let's think step by step, follow following format, using only the answers in the statement on Answering.
 Statement: True, False, Unknow, Not_enough_info
 
@@ -12,8 +12,13 @@ Question: Please identify signs of SQL injection or XSS from the given Scenario.
 Thinking: SQL Injection: The given text contains URL parameters that include the "id" and "word" fields. However, there are no SQL queries or database-related code present, so it is not possible to determine if there is a SQL injection vulnerability from this information.XSS (Cross-Site Scripting): The "word" parameter in the URL contains encoded HTML tags and JavaScript code. This could indicate an attempt to inject malicious scripts into the web page and potentially execute arbitrary code on the user's browser. Therefore, there is a potential sign of XSS vulnerability in this scenario.
 Answering: True
 
-Scenario: 
+Scenario: The intricate plot, great visuals, the world's greatest car chase ever make this movie a lot of fun to watch. The beautiful Charlize Theron adds to the enjoyment. The sound score is outstanding. Add to all this an energetic cast that also seems to be having a lot of fun making the movie.'hi or a = a 
+Question: Please identify signs of SQL injection or XSS from the given Scenario.
+Thinking: "Add to all this an energetic cast that also seems to be having a lo mak 'hi or a = a"This part contains a possible SQL injection. It can be observed that after "a lo mak 'hi or a = a," there are unclosed quotes and an equal sign, which is a typical SQL injection format. Hackers might attempt to execute malicious SQL queries in the application through this approach to retrieve sensitive data or compromise the database.
+Answering: True
 """
+
+ids_prompt_1 = "Scenario: "
 
 ids_prompt_2 = """
 Question: Please identify signs of SQL injection or XSS from the given Scenario.
@@ -22,4 +27,4 @@ Thinking:
 
 
 def get_prompt(user_input: str):
-    return ids_prompt_1 + user_input + ids_prompt_2
+    return example_prompt_1 + ids_prompt_1 + user_input + ids_prompt_2

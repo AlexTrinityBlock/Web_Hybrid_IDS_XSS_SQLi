@@ -2,15 +2,13 @@ from utils.encode_utils import data2char_index, data_to_symbol_tag
 import tensorflow as tf
 from tensorflow import keras
 import os
-from config import THRESHOLD
+from config import ATTACK_THRESHOLD, BENIGN_THRESHOLD, LOCAL_MODEL_NAME
 from controllers.gpt_model_controller import GPTModelController
 
 
 class IDSModelController:
-    def __init__(self) -> None:
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        self.model = keras.models.load_model(
-            dir_path+"/../ml_models/model.h5")
+    def __init__(self, model: keras.Model) -> None:
+        self.model = model
         self.gpt_model_controller = GPTModelController()
 
     def predict_attack_type(self, text: str) -> dict:
@@ -27,22 +25,29 @@ class IDSModelController:
         # Result
         result_bool: bool = False
 
-        # If the local model can not sure the result, then we will use the GPT model.
-        if Benign_probability < THRESHOLD:
-            result_gpt = self.gpt_model_controller.predict_attack_type(
-                text)
-            return result_gpt
-        
-        # If the local model can provide the result, then we will use the local model.
+        # If Benign_probability is less than 0.33, then we will consider the result is under attack.
         if Benign_probability < 0.33:
             result_bool = True
 
+        # If the local model can not sure the result, then we will use the GPT model.
+        if ((result_bool is True) and (Benign_probability > ATTACK_THRESHOLD)) or ((result_bool is False) and (Benign_probability < BENIGN_THRESHOLD)):
+            try:
+                print("Try to detect attack through GPT model")
+                result_gpt = self.gpt_model_controller.predict_attack_type(
+                    text)
+                return result_gpt
+            except Exception as e:
+                print(e)
+                pass
+
+        # If the local model can provide the result, then we will use the local model.
         result = {
             "result": str(result_bool),
-            "Message": "Analyzing through a local model.",
+            "message": "Analyzing through a local model.",
+            "model": LOCAL_MODEL_NAME,
             "SQLi": SQLi_probability,
             "XSS": XSS_probability,
             "Benign": Benign_probability
         }
-        
+
         return result
