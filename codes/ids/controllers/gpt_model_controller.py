@@ -34,10 +34,18 @@ class GPTModelController:
         )
         string_result = response["choices"][0]["message"]["content"]
         print("GPT raw response: ", string_result)
-        tmp_result = string_result.split("Answering")[1]
-        result = tmp_result.split(":")[1].replace(" ", "")
-        return {
-            "result": result,
-            "message": string_result,
-            "model": GPT_MODEL_NAME
-        }
+        try:
+            tmp_result = string_result.split("Answering")[1]
+            result = tmp_result.split(":")[1].replace(" ", "")
+            return {
+                "result": result,
+                "message": string_result,
+                "model": GPT_MODEL_NAME
+            }
+        except Exception as e:
+            print(f"Error parsing GPT response: {e}")
+            return {
+                "result": "Error",
+                "message": f"Unable to parse the GPT response. Raw response: {string_result}",
+                "model": GPT_MODEL_NAME
+            }
