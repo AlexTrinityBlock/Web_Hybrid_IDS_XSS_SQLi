@@ -1,5 +1,5 @@
 from typing import Union
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from controllers.hybrid_model_controller import IDSModelController
 from controllers.gpt_model_controller import GPTModelController
 from controllers.local_model_controller import LocalModelController
@@ -8,9 +8,11 @@ from models.create_tables import create_tables
 from fastapi import FastAPI, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from api_format.ids_input_format import IDSInputFormat
+from api_format.logs_time_range_format import LogsTimeRangeFormat
 from tensorflow import keras
 import os
 import time
+from datetime import datetime, timedelta
 
 # Set Python Timezone
 time.tzset()
@@ -76,8 +78,23 @@ def detect_local(text: IDSInputFormat):
 # Read logs
 
 
-@app.get("/logs", tags=["logs"])
-def read_logs():
+@app.get("/logs/minute", tags=["logs"])
+def read_logs(
+    start_time: str | None = Query(
+        default=(datetime.now()-timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S"), max_length=20),
+    end_time: str | None = Query(
+        default=datetime.now().strftime("%Y-%m-%d %H:%M:%S"), max_length=20)
+):
+    start_time_obj: datetime
+    end_time_obj: datetime
+    try:
+        start_time_obj = datetime.strptime(
+            start_time, '%Y-%m-%d %H:%M:%S')
+        end_time_obj = datetime.strptime(
+            end_time, '%Y-%m-%d %H:%M:%S')
+    except Exception as e:
+        return {"message": str(e)}
+
     log_controller = LogController()
-    logs = log_controller.read_logs()
+    logs = log_controller.read_logs(start_time_obj, end_time_obj)
     return logs

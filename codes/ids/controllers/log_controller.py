@@ -1,6 +1,6 @@
 from models.log_model import LogModel
 from models.base import SessionLocal
-
+import datetime
 
 class LogController:
     def __init__(self):
@@ -35,5 +35,10 @@ class LogController:
         self.db.refresh(log_model)
         return True
     
-    def read_logs(self):
-        return self.db.query(LogModel).all()
+    def read_logs(self, start_time: datetime = None, end_time: datetime = None):
+        query = self.db.query(LogModel)
+        if start_time:
+            query = query.filter(LogModel.timestamp >= start_time)
+        if end_time:
+            query = query.filter(LogModel.timestamp <= end_time)
+        return query.all()
