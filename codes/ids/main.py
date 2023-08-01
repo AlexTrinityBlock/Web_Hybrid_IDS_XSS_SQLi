@@ -9,6 +9,10 @@ from api_format.ids_input_format import IDSInputFormat
 from tensorflow import keras
 import os
 from models.create_tables import create_tables
+import time
+
+# Set Python Timezone
+time.tzset()
 
 # CORS
 app = FastAPI()
