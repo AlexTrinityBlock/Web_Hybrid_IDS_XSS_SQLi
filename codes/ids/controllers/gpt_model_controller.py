@@ -45,7 +45,8 @@ class GPTModelController:
         except Exception as e:
             print(f"Error parsing GPT response: {e}")
             return {
-                "result": "Error",
-                "message": f"Unable to parse the GPT response. Raw response: {string_result}",
+                "result": "Unknown",
+                "message": f"Unable to parse the GPT response.",
+                "raw_response": string_result,
                 "model": GPT_MODEL_NAME
             }
