@@ -32,3 +32,6 @@ class LogController:
         print("Refresh model from DB")
         self.db.refresh(log_model)
         return True
+    
+    def read_logs(self):
+        return self.db.query(LogModel).all()

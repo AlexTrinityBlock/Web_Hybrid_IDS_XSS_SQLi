@@ -3,12 +3,13 @@ from fastapi import FastAPI
 from controllers.hybrid_model_controller import IDSModelController
 from controllers.gpt_model_controller import GPTModelController
 from controllers.local_model_controller import LocalModelController
+from controllers.log_controller import LogController
+from models.create_tables import create_tables
 from fastapi import FastAPI, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from api_format.ids_input_format import IDSInputFormat
 from tensorflow import keras
 import os
-from models.create_tables import create_tables
 import time
 
 # Set Python Timezone
@@ -69,3 +70,9 @@ def detect_local(text: IDSInputFormat):
     result = local_model.predict_attack_type(text.text)
     return result
 
+# Read logs
+@app.get("/logs", tags=["logs"])
+def read_logs():
+    log_controller = LogController()
+    logs = log_controller.read_logs()
+    return logs
