@@ -3,9 +3,10 @@ from models.base import Base, engine
 import datetime
 
 
-class Log(Base):
+class LogModel(Base):
     __tablename__ = "logs"
-    id = Column(Integer, primary_key=True, index=True, unique=True,)
+    id = Column(Integer, primary_key=True, index=True,
+                unique=True, autoincrement=True)
     is_positive = Column(Boolean, nullable=True)
     SQLi_probability = Column(Float, nullable=True)
     XSS_probability = Column(Float, nullable=True)
@@ -14,6 +15,3 @@ class Log(Base):
     result = Column(String, nullable=False)
     raw_gpt_response = Column(String, nullable=True)
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
-
-
-

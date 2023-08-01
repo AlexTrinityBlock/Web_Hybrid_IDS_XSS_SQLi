@@ -1,5 +1,4 @@
-from models.log_model_base import Log
-from models.base import engine
+from controllers.log_controller import LogController
 
-log = Log()
-log.metadata.create_all(engine)
+log_controller = LogController()
+log_controller.create_log(model_type="Test", result="Test")

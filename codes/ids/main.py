@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from api_format.ids_input_format import IDSInputFormat
 from tensorflow import keras
 import os
-
+from models.create_tables import create_tables
 
 # CORS
 app = FastAPI()
@@ -27,8 +27,13 @@ model = keras.models.load_model(
     dir_path+"/ml_models/model.h5")
 ids_model = IDSModelController(model)
 local_model = LocalModelController(model)
+
+# Init database
+create_tables()
+
 # URLs
-# root
+
+# Root URL
 
 
 @app.get("/", tags=["root"])
@@ -59,3 +64,4 @@ def detect_gpt(text: IDSInputFormat):
 def detect_local(text: IDSInputFormat):
     result = local_model.predict_attack_type(text.text)
     return result
+
