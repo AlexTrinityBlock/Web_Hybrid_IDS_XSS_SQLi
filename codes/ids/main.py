@@ -8,7 +8,6 @@ from models.create_tables import create_tables
 from fastapi import FastAPI, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from api_format.ids_input_format import IDSInputFormat
-from api_format.logs_time_range_format import LogsTimeRangeFormat
 from tensorflow import keras
 import os
 import time
@@ -40,17 +39,17 @@ create_tables()
 
 # URLs
 
-# Root URL
+# Introduction URL
 
 
-@app.get("/", tags=["root"])
+@app.get("/", tags=["Introduction"])
 def read_root():
     return {"message": "This is the IDS API"}
 
 # Detection SQL injection and XSS with hybrid model
 
 
-@app.post("/detect/hybrid", tags=["ids"])
+@app.post("/detect/hybrid/", tags=["IDS"])
 def detect(text: IDSInputFormat):
     result = ids_model.predict_attack_type(
         text=text.text, from_ip=text.from_ip)
@@ -59,7 +58,7 @@ def detect(text: IDSInputFormat):
 # Detection SQL injection and XSS with openai api gpt
 
 
-@app.post("/detect/gpt/", tags=["ids"])
+@app.post("/detect/gpt/", tags=["IDS"])
 def detect_gpt(text: IDSInputFormat):
     gpt_model = GPTModelController()
     result = gpt_model.predict_attack_type(
@@ -69,7 +68,7 @@ def detect_gpt(text: IDSInputFormat):
 # Detection SQL injection and XSS with local model
 
 
-@app.post("/detect/local/", tags=["ids"])
+@app.post("/detect/local/", tags=["IDS"])
 def detect_local(text: IDSInputFormat):
     result = local_model.predict_attack_type(
         text=text.text, from_ip=text.from_ip)
@@ -78,7 +77,7 @@ def detect_local(text: IDSInputFormat):
 # Read logs
 
 
-@app.get("/logs/minute", tags=["logs"])
+@app.get("/logs/", tags=["Log"])
 def read_logs(
     start_time: str | None = Query(
         default=(datetime.now()-timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S"), max_length=20),
