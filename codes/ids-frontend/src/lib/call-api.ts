@@ -57,3 +57,11 @@ export const getGPTLogAnalysisCache = async function (): Promise<Object> {
     const data = await response.json();
     return data;
 }
+
+export const getGPTLogAnalysis = async function (): Promise<Object> {
+    const response = await fetch('http://localhost/logs/analysis/', {
+        method: 'GET',
+    });
+    const data = await response.json();
+    return data;
+}

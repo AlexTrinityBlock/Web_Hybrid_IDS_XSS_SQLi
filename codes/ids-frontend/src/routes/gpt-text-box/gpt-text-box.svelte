@@ -1,22 +1,36 @@
 <script>
     import { onMount } from "svelte";
-    import { loadLogsAnalysiscache } from "$lib/gpt-text-box";
-    onMount(async () => {});
+    import { loadLogsAnalysiscache, loadLogsAnalysis } from "$lib/gpt-text-box";
+    onMount(async () => {
+        loadLogsAnalysiscache();
+    });
 </script>
 
 <div class="container ids-chart-container">
     <div class="row">
         <div class="col-md-12">
             <div class="card" id="ids-chat-card">
-                <div class="card-body">
+                <div class="card-body text-center">
                     <h5 class="card-title">Threat Analysis</h5>
                     <hr />
-                    <p class="card-text">
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                    </p>
+                    <p class="card-text" id="ids-chat-analysis-text">None</p>
+                    <hr />
+                    <div
+                        class="spinner-border text-warning"
+                        role="status"
+                        id="ids-chat-spinner"
+                    />
+                    <button
+                        on:click={loadLogsAnalysis}
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        id="ids-chat-btn"
+                    >
+                        <b>Update</b>
+                    </button>
                 </div>
             </div>
+            <br />
         </div>
     </div>
 </div>
