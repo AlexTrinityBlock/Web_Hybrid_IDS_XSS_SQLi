@@ -1,14 +1,20 @@
 from models.log_model import LogModel
-from models.base import SessionLocal
+from models.base import SQLALCHEMY_DATABASE_URL, SessionLocal
 import datetime
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
 
 class LogController:
     def __init__(self):
+        engine = create_engine(SQLALCHEMY_DATABASE_URL,
+                               pool_size=40, max_overflow=0)
         self.db = SessionLocal()
 
     def __del__(self):
         self.db.close()
+        print("Close session Class del")
 
     def create_log(self, model_type: str,
                    result: str,
@@ -37,8 +43,6 @@ class LogController:
 
         print("Refresh model from DB")
         self.db.refresh(log_model)
-        print("Close session")
-        self.db.close()
         return True
 
     def read_logs(self, start_time: datetime = None, end_time: datetime = None):
@@ -47,21 +51,22 @@ class LogController:
             query = query.filter(LogModel.timestamp >= start_time)
         if end_time:
             query = query.filter(LogModel.timestamp <= end_time)
-        return query.all()
+        result = query.all()
+        return result
 
     def read_statistics_total(self):
         # Count total positive number of log
-        query = SessionLocal().query(LogModel)
+        query = self.db.query(LogModel)
         query = query.filter(LogModel.is_positive == 'true')
         positive_number: int = query.count()
 
         # Coount total negative number of log
-        query = SessionLocal().query(LogModel)
+        query = self.db.query(LogModel)
         query = query.filter(LogModel.is_positive == 'false')
         negative_number: int = query.count()
 
         # Coount total number of log
-        query = SessionLocal().query(LogModel)
+        query = self.db.query(LogModel)
         total_number: int = query.count()
 
         result = {
@@ -70,14 +75,11 @@ class LogController:
             'total_number': total_number,
         }
 
-        print("Close session")
-        self.db.close()
-
         return result
 
     def read_last_hours_access(self):
         # Init
-        query = SessionLocal().query(LogModel)
+        query = self.db.query(LogModel)
         query = query.filter(
             LogModel.timestamp >= datetime.datetime.now() - datetime.timedelta(hours=1))
         log_result: list = query.all()

@@ -4,6 +4,7 @@ from controllers.hybrid_model_controller import IDSModelController
 from controllers.gpt_model_controller import GPTModelController
 from controllers.local_model_controller import LocalModelController
 from controllers.log_controller import LogController
+from controllers.log_analysis_controller import LogAnalysisController
 from models.create_tables import create_tables
 from fastapi import FastAPI, Response, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -74,6 +75,25 @@ def detect_local(text: IDSInputFormat):
         text=text.text, from_ip=text.from_ip)
     return result
 
+# Analysis logs by GPT
+
+
+@app.get("/logs/analysis/", tags=["Analysis"])
+def log_analysis():
+    log_analysis_controller = LogAnalysisController()
+    result = log_analysis_controller.gpt_analysis()
+    return result
+
+# Analysis logs by GPT cache
+
+@app.get("/logs/analysis/cached/", tags=["Analysis"])
+def log_analysis_cache():
+    log_analysis_controller = LogAnalysisController()
+    result = log_analysis_controller.get_analysis_cache()
+    return result
+
+
+
 # Read logs
 
 
@@ -100,6 +120,7 @@ def read_logs(
 
 # Count positives, negatives and total of logs
 
+
 @app.get("/logs/statistics/", tags=["Log"])
 def statistics_total_logs():
     log_controller = LogController()
@@ -108,9 +129,9 @@ def statistics_total_logs():
 
 # Get lasthour logs
 
+
 @app.get("/logs/lasthour/", tags=["Log"])
 def lasthour_logs():
     log_controller = LogController()
     logs = log_controller.read_last_hours_access()
     return logs
-
