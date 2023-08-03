@@ -97,3 +97,20 @@ def read_logs(
     log_controller = LogController()
     logs = log_controller.read_logs(start_time_obj, end_time_obj)
     return logs
+
+# Count positives, negatives and total of logs
+
+@app.get("/logs/statistics/", tags=["Log"])
+def statistics_total_logs():
+    log_controller = LogController()
+    logs = log_controller.read_statistics_total()
+    return logs
+
+# Get lasthour logs
+
+@app.get("/logs/lasthour/", tags=["Log"])
+def lasthour_logs():
+    log_controller = LogController()
+    logs = log_controller.read_last_hours_access()
+    return logs
+
