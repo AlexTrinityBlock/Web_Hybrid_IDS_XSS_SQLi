@@ -6,15 +6,24 @@
     import IdsChart from "./ids-chart/ids-chart.svelte";
     import HomeRefreshBtn from "./refresh-btn/home-refresh-btn.svelte";
     // On browser load
-    onMount(async () => {
-        await import("bootstrap");
-    });
+    onMount(async () => {});
+    let updateElement = {};
+    let update = () => {
+        updateElement = {};
+    };
+    setInterval(update, 5000);
 </script>
 
 <Nav />
-<IdsChart />
+<!-- For Update Chart -->
+<div style="min-height: 500px; display:relative">
+    {#key updateElement}
+        <IdsChart />
+    {/key}
+</div>
 <Statistics />
-<HomeRefreshBtn />
+
+<!-- <HomeRefreshBtn /> -->
 
 <style lang="scss">
     @import "/static/sass/home.sass";

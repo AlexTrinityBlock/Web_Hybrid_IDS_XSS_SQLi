@@ -20,5 +20,5 @@ export const statisticsLoop = async function () {
         }
     }
     asignData()
-    // setInterval(asignData, 10000);
+    setInterval(asignData, 5000);
 }
