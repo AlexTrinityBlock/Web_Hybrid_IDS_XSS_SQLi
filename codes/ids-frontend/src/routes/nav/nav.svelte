@@ -16,11 +16,12 @@
     </li>
   </ul>
 
-  <ul class="navbar-nav ms-auto" data-sveltekit-reload>
+  <!-- <ul class="navbar-nav ms-auto" >
     <li class="nav-item">
-      <a class="nav-link" href="/">
+      <a data-sveltekit-reload class="nav-link" href="/">
         <button id='nav-refresh-btn' type="button" class="btn btn-outline-light">Refresh</button>
       </a>
     </li>
-  </ul>
+  </ul> -->
+
 </nav>
