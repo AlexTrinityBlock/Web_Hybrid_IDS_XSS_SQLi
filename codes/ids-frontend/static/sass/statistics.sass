@@ -1,0 +1,61 @@
+$counter-title-font-size: 1.5rem
+$counter-font-size: 2.5rem
+$positive-color:white
+$negative-color:white
+$counter-block-padding: 4
+$counter-block-max-width: 250px
+$counter-block-max-height: 200px
+#counter-body
+    .counter-block
+        // background-color: gray
+        padding-left: ($spacer * $counter-block-padding) !important
+        padding-right: ($spacer * $counter-block-padding) !important
+        padding-top: ($spacer * $counter-block-padding) !important
+        padding-down: ($spacer * $counter-block-padding) !important
+        // height: 500px
+        .counter-text
+            height: 250px
+
+        #positive-request-block
+            background-color: #ff5000
+            max-width: $counter-block-max-width
+            max-height: $counter-block-max-height
+
+        #positive-request-title
+            font-size: $counter-title-font-size
+            font-weight: bold
+            color: $positive-color
+
+        #positive-request-body
+            font-size: $counter-font-size
+            color: $positive-color
+
+        #negative-request-block
+            background-color: #057859
+            max-width: $counter-block-max-width
+            max-width: $counter-block-max-width
+            max-height: $counter-block-max-height
+
+        #negative-request-title
+            font-size: $counter-title-font-size
+            font-weight: bold
+            color: $positive-color
+
+        #negative-request-body
+            font-size: $counter-font-size
+            color: $negative-color
+
+        #total-request-block
+            background-color: #4c9cb9
+            max-width: $counter-block-max-width
+            max-width: $counter-block-max-width
+            max-height: $counter-block-max-height
+
+        #total-request-title
+            font-size: $counter-title-font-size
+            font-weight: bold
+            color: $positive-color
+
+        #total-request-body
+            font-size: $counter-font-size
+            color: $positive-color
