@@ -14,6 +14,9 @@
     <li class="nav-item">
       <a data-sveltekit-reload class="nav-link" href="/log/1">Log</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/manual-input">ManualInput</a>
+    </li>
   </ul>
 
   <!-- <ul class="navbar-nav ms-auto" >
