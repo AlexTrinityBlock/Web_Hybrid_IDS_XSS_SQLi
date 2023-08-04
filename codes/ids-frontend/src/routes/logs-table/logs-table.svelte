@@ -46,17 +46,20 @@
                         <b>from_ip</b>:&nbsp; {data.from_ip}
                     </p>
                     {#if data.SQLi_probability}
-                    <p>
-                        <b>SQLi probability</b>:&nbsp; {data.SQLi_probability}
-                    </p>
+                        <p>
+                            <b>SQLi probability</b>:&nbsp;
+                            {String((data.SQLi_probability * 100).toFixed(2)) + "%"}
+                        </p>
 
-                    <p>
-                        <b>XSS probability</b>:&nbsp; {data.XSS_probability}
-                    </p>
+                        <p>
+                            <b>XSS probability</b>:&nbsp;
+                            {String((data.XSS_probability * 100).toFixed(2)) + "%"}
+                        </p>
 
-                    <p>
-                        <b>Benign probability</b>:&nbsp; {data.Benign_probability}
-                    </p>
+                        <p>
+                            <b>Benign probability</b>:&nbsp;
+                            {String((data.Benign_probability * 100).toFixed(2)) + "%"}
+                        </p>
                     {/if}
                     <p>
                         <b>model type</b>:&nbsp; {data.model_type}
