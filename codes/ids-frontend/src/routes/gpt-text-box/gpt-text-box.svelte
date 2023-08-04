@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <div class="card" id="ids-chat-card">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Threat Analysis</h5>
+                    <h1 class="card-title">Threat Analysis</h1>
                     <hr />
                     <p class="card-text" id="ids-chat-analysis-text">None</p>
                     <hr />
