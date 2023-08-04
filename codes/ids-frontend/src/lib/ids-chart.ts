@@ -46,7 +46,7 @@ export const idsDoughnutChart = async function () {
             backgroundColor: [
                 '#ff5000',
                 '#057859',
-                '#FF8E01'
+                '#ffd800'
             ],
             // hoverOffset: 4,
             borderColor: '#1f3039'
@@ -112,7 +112,7 @@ export const idsBarChart = async function () {
             label: 'Unknow',
             data: result.unknown_time_log_list,
             fill: false,
-            borderColor: '#FF8E01',
+            borderColor: '#ddf800',
             tension: 0.1,
             pointStyle: false,
         }

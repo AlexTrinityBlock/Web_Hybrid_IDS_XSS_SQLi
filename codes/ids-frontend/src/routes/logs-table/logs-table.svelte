@@ -45,7 +45,7 @@
                     <p>
                         <b>from_ip</b>:&nbsp; {data.from_ip}
                     </p>
-
+                    {#if data.SQLi_probability}
                     <p>
                         <b>SQLi probability</b>:&nbsp; {data.SQLi_probability}
                     </p>
@@ -57,6 +57,7 @@
                     <p>
                         <b>Benign probability</b>:&nbsp; {data.Benign_probability}
                     </p>
+                    {/if}
                     <p>
                         <b>model type</b>:&nbsp; {data.model_type}
                     </p>

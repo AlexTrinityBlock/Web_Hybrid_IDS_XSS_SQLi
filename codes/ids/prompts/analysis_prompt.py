@@ -31,7 +31,7 @@ def get_prompt():
     statistics_logs = json.dumps(log_controller.read_statistics_total())
     logs_obj = log_controller.read_logs(before, now)
     logs_str = get_logs(logs_obj)
-    result = (prompt_1 + statistics_logs + logs_str)[0:3000]
+    result = (prompt_1 + statistics_logs + logs_str)[-4000:]
     return result
 
 

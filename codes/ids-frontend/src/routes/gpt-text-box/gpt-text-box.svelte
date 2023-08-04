@@ -13,7 +13,11 @@
                 <div class="card-body text-center">
                     <h1 class="card-title">Threat Analysis</h1>
                     <hr />
-                    <p class="card-text" id="ids-chat-analysis-text">None</p>
+                    <div class="text-start" id='ids-chat-content'>
+                        <p class="card-text" id="ids-chat-analysis-text">
+                            None
+                        </p>
+                    </div>
                     <hr />
                     <div
                         class="spinner-border text-warning"

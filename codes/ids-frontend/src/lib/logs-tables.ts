@@ -5,7 +5,13 @@ export const loadLogsData = async function (pageNumber: number) {
     const totalDataNumber:number = statisticsData.total_number;
     const dataPerPage:number = 5;
     const loadDataEnd:number = totalDataNumber-((pageNumber-1) * dataPerPage);
-    const loadDataStart:number = loadDataEnd - (dataPerPage-1);
+    let loadDataStart:number 
+    if(pageNumber > 5){
+        loadDataStart= loadDataEnd - (dataPerPage-1);
+    }else{
+        loadDataStart = 1
+    }
+    
     const logsDataReverse:Object = await getLogsByID(loadDataStart, loadDataEnd);
     const logsData:Object = Object.values(logsDataReverse).reverse();
     return logsData;
