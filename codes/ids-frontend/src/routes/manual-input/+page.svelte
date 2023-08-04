@@ -1,8 +1,15 @@
 <script>
     // @ts-nocheck
-
+    import { resultData } from "$lib/result-data";
+    import {manualInput} from '$lib/manual-input'
     import Nav from "../nav/nav.svelte";
+    
+    
     let data = null;
+    resultData.subscribe((value) => {
+		data = value;
+	});
+
 </script>
 
 <Nav />
@@ -44,65 +51,66 @@
                         type="button"
                         class="btn btn-outline-secondary"
                         id="ids-chat-btn"
+                        on:click={manualInput}
                     >
                         <b>Submit</b>
                     </button>
                 </div>
             </div>
 
-            {#if data}
+            {#if data.result}
                 <div class="card result-card">
                     <h1>Result</h1>
                     <p>
                         <b>result</b>:&nbsp;
-                        <!-- {#if data.result == "True"} -->
+                        {#if data.result == "True"}
                         <span class="badge text-bg-danger">
-                            <!-- {data.result} -->
+                            {data.result}
                         </span>
-                        <!-- {:else if data.result == "False"} -->
+                        {:else if data.result == "False"}
                         <span class="badge text-bg-success">
-                            <!-- {data.result} -->
+                            {data.result}
                         </span>
-                        <!-- {:else} -->
+                        {:else}
                         <span class="badge text-bg-warning">
-                            <!-- {data.result} -->
+                            {data.result}
                         </span>
-                        <!-- {/if} -->
+                        {/if}
                     </p>
 
                     <p>
-                        <!-- <b>from_ip</b>:&nbsp; {data.from_ip} -->
+                        <b>from_ip</b>:&nbsp; {data.from_ip}
                     </p>
 
                     <p>
-                        <!-- <b>SQLi probability</b>:&nbsp; {data.SQLi_probability} -->
+                        <b>SQLi probability</b>:&nbsp; {data.SQLi_probability}
                     </p>
 
                     <p>
-                        <!-- <b>XSS probability</b>:&nbsp; {data.XSS_probability} -->
+                        <b>XSS probability</b>:&nbsp; {data.XSS_probability}
                     </p>
 
                     <p>
-                        <!-- <b>Benign probability</b>:&nbsp; {data.Benign_probability} -->
+                        <b>Benign probability</b>:&nbsp; {data.Benign_probability}
                     </p>
                     <p>
-                        <!-- <b>model type</b>:&nbsp; {data.model_type} -->
+                        <b>model type</b>:&nbsp; {data.model_type}
                     </p>
                     <p>
-                        <!-- <b>timestamp</b>:&nbsp; {data.timestamp} -->
+                        <b>timestamp</b>:&nbsp; {data.timestamp}
                     </p>
                     <div class="card result-card-payload">
                         <h4>Payload</h4>
                         <div class="card">
-                            <!-- <p>{data.payload}</p> -->
+                            <p>{data.payload}</p>
                         </div>
                     </div>
-                    <!-- {#if data.raw_gpt_response} -->
+                    {#if data.raw_gpt_response}
                     <div class="card result-card-analysis">
                         <h4>Analysis</h4>
-                        <!-- <p>{data.raw_gpt_response}</p> -->
+                        <p>{data.raw_gpt_response}</p>
                     </div>
-                    <!-- {/if} -->
+                    {/if}
                 </div>
             {/if}
         </div>
