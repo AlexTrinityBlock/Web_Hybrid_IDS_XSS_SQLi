@@ -1,5 +1,8 @@
 # Web_Hybrid_IDS_XSS_SQLi
-Tensorflow base IDS for SQL injection and XSS
+
+This is a self-hosted API based on Tensorflow and FastAPI to detect SQL injection and XSS.
+
+---
 
 # Setup
 
