@@ -1,15 +1,13 @@
 <script>
     // @ts-nocheck
     import { resultData } from "$lib/result-data";
-    import {manualInput} from '$lib/manual-input'
+    import { manualInput } from "$lib/manual-input";
     import Nav from "../nav/nav.svelte";
-    
-    
+
     let data = null;
     resultData.subscribe((value) => {
-		data = value;
-	});
-
+        data = value;
+    });
 </script>
 
 <Nav />
@@ -46,11 +44,15 @@
                 </div>
                 <br />
                 <div class="col-md-12">
+                    <div
+                        class="spinner-border text-warning"
+                        role="status"
+                        id="ids-spinner"
+                    />
                     <button
-
                         type="button"
                         class="btn btn-outline-secondary"
-                        id="ids-chat-btn"
+                        id="ids-btn"
                         on:click={manualInput}
                     >
                         <b>Submit</b>
@@ -64,40 +66,38 @@
                     <p>
                         <b>result</b>:&nbsp;
                         {#if data.result == "True"}
-                        <span class="badge text-bg-danger">
-                            {data.result}
-                        </span>
+                            <span class="badge text-bg-danger">
+                                {data.result}
+                            </span>
                         {:else if data.result == "False"}
-                        <span class="badge text-bg-success">
-                            {data.result}
-                        </span>
+                            <span class="badge text-bg-success">
+                                {data.result}
+                            </span>
                         {:else}
-                        <span class="badge text-bg-warning">
-                            {data.result}
-                        </span>
+                            <span class="badge text-bg-warning">
+                                {data.result}
+                            </span>
                         {/if}
                     </p>
 
                     <p>
-                        <b>from_ip</b>:&nbsp; {data.from_ip}
+                        <b>IP Address</b>:&nbsp; {data.ipAddress}
                     </p>
+                    {#if data.SQLi_probability && data.XSS_probability && data.Benign_probability}
+                        <p>
+                            <b>SQLi probability</b>:&nbsp; {data.SQLi_probability}
+                        </p>
 
-                    <p>
-                        <b>SQLi probability</b>:&nbsp; {data.SQLi_probability}
-                    </p>
+                        <p>
+                            <b>XSS probability</b>:&nbsp; {data.XSS_probability}
+                        </p>
 
+                        <p>
+                            <b>Benign probability</b>:&nbsp; {data.Benign_probability}
+                        </p>
+                    {/if}
                     <p>
-                        <b>XSS probability</b>:&nbsp; {data.XSS_probability}
-                    </p>
-
-                    <p>
-                        <b>Benign probability</b>:&nbsp; {data.Benign_probability}
-                    </p>
-                    <p>
-                        <b>model type</b>:&nbsp; {data.model_type}
-                    </p>
-                    <p>
-                        <b>timestamp</b>:&nbsp; {data.timestamp}
+                        <b>model type</b>:&nbsp; {data.model}
                     </p>
                     <div class="card result-card-payload">
                         <h4>Payload</h4>
@@ -105,11 +105,14 @@
                             <p>{data.payload}</p>
                         </div>
                     </div>
-                    {#if data.raw_gpt_response}
-                    <div class="card result-card-analysis">
-                        <h4>Analysis</h4>
-                        <p>{data.raw_gpt_response}</p>
-                    </div>
+                    {#if data.message}
+                        <div class="card result-card-analysis">
+                            <h4>Analysis</h4>
+                            <p>{data.message}</p>
+                            {#if data.raw_gpt_response}
+                                <p>{data.raw_gpt_response}</p>
+                            {/if}
+                        </div>
                     {/if}
                 </div>
             {/if}
