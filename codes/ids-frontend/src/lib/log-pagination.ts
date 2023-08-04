@@ -31,6 +31,19 @@ export const getLogPagination = async (pageNumber: number) => {
             btnURLList.push('/log/3')
         }
 
+    } else if (pageNumber == 2) {
+        btnNumberList = [String(pageNumber-1), String(pageNumber)]
+        btnURLList = [
+            '/log/' + String(pageNumber - 1),
+            '/log/' + String(pageNumber - 1),
+            '/log/' + String(pageNumber),
+            '/log/' + String(pageNumber),
+        ]
+        console.log(btnURLList)
+        if (totalDataNumber > 10) {
+            btnURLList.push('/log/' + String(pageNumber+1))
+            btnNumberList.push(String(pageNumber+1))
+        }
     }
     // Page > 1 and not Last Page
     else if (pageNumber < (totalDataNumber / 5)) {

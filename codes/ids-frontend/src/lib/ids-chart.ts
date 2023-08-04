@@ -60,8 +60,17 @@ export const idsDoughnutChart = async function () {
                 type: 'doughnut',
                 data: data,
                 options: {
+
                     responsive: false,
                     plugins: {
+                        title:{
+                            display: true,
+                            text:"Proportions",
+                            color:'#fff',
+                            font: {
+                                size: 22,
+                            }
+                        },
                         legend: {
                             labels: {
                                 // This more specific font property overrides the global property
@@ -124,6 +133,14 @@ export const idsBarChart = async function () {
         data: data,
         options: {
             plugins: {
+                title:{
+                    display: true,
+                    text:"Events",
+                    color:'#fff',
+                    font: {
+                        size: 22,
+                    }
+                },
                 legend: {
                     labels: {
                         // This more specific font property overrides the global property
