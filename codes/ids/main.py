@@ -135,3 +135,14 @@ def lasthour_logs():
     log_controller = LogController()
     logs = log_controller.read_last_hours_access()
     return logs
+
+# Read logs by id range
+
+@app.get("/logs/id_range/", tags=["Log"])
+def read_logs_by_id_range(
+    start_id: int = Query(..., ge=0),
+    end_id: int = Query(..., ge=0)
+):
+    log_controller = LogController()
+    logs = log_controller.read_logs_by_id_range(start_id, end_id)
+    return logs

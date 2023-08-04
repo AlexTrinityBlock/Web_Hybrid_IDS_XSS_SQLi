@@ -1,5 +1,5 @@
 from models.log_model import LogModel
-from models.base import SQLALCHEMY_DATABASE_URL, SessionLocal
+from models.base import SessionLocal
 import datetime
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -8,8 +8,6 @@ from sqlalchemy.orm import sessionmaker
 
 class LogController:
     def __init__(self):
-        engine = create_engine(SQLALCHEMY_DATABASE_URL,
-                               pool_size=40, max_overflow=0)
         self.db = SessionLocal()
 
     def __del__(self):
@@ -35,39 +33,37 @@ class LogController:
                              raw_gpt_response=raw_gpt_response,
                              from_ip=from_ip,
                              )
-        print("Add model to DB")
-        self.db.add(log_model)
-
-        print("Commit model to DB")
-        self.db.commit()
-
-        print("Refresh model from DB")
-        self.db.refresh(log_model)
+        with self.db as session:
+            session.add(log_model)
+            session.commit()
+            session.refresh(log_model)
         return True
 
     def read_logs(self, start_time: datetime = None, end_time: datetime = None):
-        query = self.db.query(LogModel)
-        if start_time:
-            query = query.filter(LogModel.timestamp >= start_time)
-        if end_time:
-            query = query.filter(LogModel.timestamp <= end_time)
-        result = query.all()
+        with self.db as session:
+            query = session.query(LogModel)
+            if start_time:
+                query = query.filter(LogModel.timestamp >= start_time)
+            if end_time:
+                query = query.filter(LogModel.timestamp <= end_time)
+            result = query.all()
         return result
 
     def read_statistics_total(self):
-        # Count total positive number of log
-        query = self.db.query(LogModel)
-        query = query.filter(LogModel.is_positive == 'true')
-        positive_number: int = query.count()
+        with self.db as session:
+            # Count total positive number of log
+            query = session.query(LogModel)
+            query = query.filter(LogModel.is_positive == 'true')
+            positive_number: int = query.count()
 
-        # Coount total negative number of log
-        query = self.db.query(LogModel)
-        query = query.filter(LogModel.is_positive == 'false')
-        negative_number: int = query.count()
+            # Coount total negative number of log
+            query = self.db.query(LogModel)
+            query = query.filter(LogModel.is_positive == 'false')
+            negative_number: int = query.count()
 
-        # Coount total number of log
-        query = self.db.query(LogModel)
-        total_number: int = query.count()
+            # Coount total number of log
+            query = self.db.query(LogModel)
+            total_number: int = query.count()
 
         result = {
             'positive_number': positive_number,
@@ -78,11 +74,12 @@ class LogController:
         return result
 
     def read_last_hours_access(self):
-        # Init
-        query = self.db.query(LogModel)
-        query = query.filter(
-            LogModel.timestamp >= datetime.datetime.now() - datetime.timedelta(hours=1))
-        log_result: list = query.all()
+        with self.db as session:
+            # Init
+            query = session.query(LogModel)
+            query = query.filter(
+                LogModel.timestamp >= datetime.datetime.now() - datetime.timedelta(hours=1))
+            log_result: list = query.all()
 
         # I need to get a list of time log for line chart
         positive_time_log_list: list = []
@@ -132,3 +129,8 @@ class LogController:
             else:
                 timeline.append('')
         return timeline
+    
+    def read_logs_by_id_range(self, start_id: int, end_id: int):
+        with self.db as session:
+            logs = session.query(LogModel).filter(LogModel.id >= start_id, LogModel.id <= end_id).all()
+        return logs
