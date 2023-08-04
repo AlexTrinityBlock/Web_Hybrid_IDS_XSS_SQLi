@@ -6,6 +6,8 @@ export const getLogPagination = async (pageNumber: number) => {
     let btnNumberList: Array<String>
     let btnURLList: Array<String>
 
+    console.log('Total Page number',totalDataNumber)
+    
     // Page = 1
     if (pageNumber == 1) {
         btnNumberList = [String(pageNumber)]
@@ -31,30 +33,31 @@ export const getLogPagination = async (pageNumber: number) => {
             btnURLList.push('/log/3')
         }
 
-    } else if (pageNumber == 2) {
-        btnNumberList = [String(pageNumber-1), String(pageNumber)]
+    } else if (pageNumber == 2 ) {
+        btnNumberList = [String(pageNumber - 1), String(pageNumber)]
         btnURLList = [
             '/log/' + String(pageNumber - 1),
             '/log/' + String(pageNumber - 1),
             '/log/' + String(pageNumber),
             '/log/' + String(pageNumber),
         ]
-        console.log(btnURLList)
+
         if (totalDataNumber > 10) {
-            btnURLList.push('/log/' + String(pageNumber+1))
-            btnNumberList.push(String(pageNumber+1))
+            btnURLList.pop()
+            btnURLList.push('/log/' + String(pageNumber + 1))
+            btnURLList.push('/log/' + String(pageNumber + 1))
+            btnNumberList.push(String(pageNumber + 1))
         }
     }
     // Page > 1 and not Last Page
     else if (pageNumber < (totalDataNumber / 5)) {
         btnNumberList = [String(pageNumber - 1), String(pageNumber), String(pageNumber + 1)]
         btnURLList = [
-            '/log/' + String(pageNumber - 2),
+            '/log/' + String(pageNumber - 1),
             '/log/' + String(pageNumber - 1),
             '/log/' + String(pageNumber),
             '/log/' + String(pageNumber + 1),
-            '/log/' + String(pageNumber + 2),
-            '/log/' + String(pageNumber + 3),
+            '/log/' + String(pageNumber + 1),
         ]
 
     }
@@ -62,13 +65,14 @@ export const getLogPagination = async (pageNumber: number) => {
     else {
         btnNumberList = [String(pageNumber - 2), String(pageNumber - 1), String(pageNumber)]
         btnURLList = [
-            '/log/' + String(pageNumber - 5),
-            '/log/' + String(pageNumber - 4),
-            '/log/' + String(pageNumber - 3),
             '/log/' + String(pageNumber - 2),
+            '/log/' + String(pageNumber - 2),
+            '/log/' + String(pageNumber -1),
+            '/log/' + String(pageNumber ),
             '/log/' + String(pageNumber),
             '/log/' + String(pageNumber),
         ]
+        
     }
 
     btnNumberList.unshift("«");

@@ -7,12 +7,13 @@ export const loadLogsData = async function (pageNumber: number) {
     const loadDataEnd: number = totalDataNumber - ((pageNumber - 1) * dataPerPage);
     let loadDataStart: number
 
-    if ((loadDataEnd - (pageNumber*dataPerPage) )>0) {
-        loadDataStart = loadDataEnd - (pageNumber*dataPerPage) +1 ;
+    if ((loadDataEnd - (dataPerPage-1) )>0) {
+        loadDataStart = loadDataEnd - (dataPerPage-1) ;
     }else{
-        loadDataStart = loadDataEnd - (pageNumber - 1)*dataPerPage ;
-        loadDataStart += dataPerPage
+        loadDataStart = 1
     }
+    console.log(loadDataEnd - (pageNumber*dataPerPage))
+    console.log(loadDataStart, loadDataEnd)
 
     const logsDataReverse: Object = await getLogsByID(loadDataStart, loadDataEnd);
     const logsData: Object = Object.values(logsDataReverse).reverse();
