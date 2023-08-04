@@ -1,3 +1,4 @@
 .env
 **/__pycache__/
 codes/ids/analysis_cache/analysis_cache.txt
+codes/ids-frontend/run.bat
