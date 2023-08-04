@@ -12,7 +12,7 @@
       <a class="nav-link" href="/analysis">Analysis</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/">Log</a>
+      <a class="nav-link" href="/log/1">Log</a>
     </li>
   </ul>
 

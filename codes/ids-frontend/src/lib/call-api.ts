@@ -65,3 +65,20 @@ export const getGPTLogAnalysis = async function (): Promise<Object> {
     const data = await response.json();
     return data;
 }
+
+export const getLogsByID = async function (start_id: number, end_id: number): Promise<Object> {
+    const urlObj = new URLSearchParams(
+        {
+            "start_id ": start_id.toString(),
+            "end_id ": end_id.toString(),
+        }
+    )
+    const urlString:string = 'http://localhost/logs/id_range/?'+ urlObj.toString().replaceAll('+','')
+
+    const response = await fetch( urlString,
+        {
+            method: 'GET',
+        });
+    const data = await response.json();
+    return data;
+}

@@ -7,6 +7,7 @@ from sqlalchemy.orm import sessionmaker
 
 
 class LogController:
+    # Constructor of the LogController class
     def __init__(self):
         self.db = SessionLocal()
 
@@ -14,6 +15,7 @@ class LogController:
         self.db.close()
         print("Close session Class del")
 
+    # Method to create a new log in the database
     def create_log(self, model_type: str,
                    result: str,
                    payload: str,
@@ -34,11 +36,14 @@ class LogController:
                              from_ip=from_ip,
                              )
         with self.db as session:
+            # Add the new log to the session and commit the transaction
             session.add(log_model)
             session.commit()
+            # Refresh the instance in the session, synchronizing it against any database changes.
             session.refresh(log_model)
         return True
 
+    # Method to read logs from the database within a given time range
     def read_logs(self, start_time: datetime = None, end_time: datetime = None):
         with self.db as session:
             query = session.query(LogModel)
@@ -49,6 +54,7 @@ class LogController:
             result = query.all()
         return result
 
+    # Method to read the total statistics from the database
     def read_statistics_total(self):
         with self.db as session:
             # Count total positive number of log
@@ -129,8 +135,10 @@ class LogController:
             else:
                 timeline.append('')
         return timeline
-    
+
+    # Method to read logs within a certain ID range
     def read_logs_by_id_range(self, start_id: int, end_id: int):
         with self.db as session:
-            logs = session.query(LogModel).filter(LogModel.id >= start_id, LogModel.id <= end_id).all()
+            logs = session.query(LogModel).filter(
+                LogModel.id >= start_id, LogModel.id <= end_id).order_by(LogModel.id.asc()).all()
         return logs

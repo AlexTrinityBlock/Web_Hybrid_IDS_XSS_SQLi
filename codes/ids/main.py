@@ -86,12 +86,12 @@ def log_analysis():
 
 # Analysis logs by GPT cache
 
+
 @app.get("/logs/analysis/cached/", tags=["Analysis"])
 def log_analysis_cache():
     log_analysis_controller = LogAnalysisController()
     result = log_analysis_controller.get_analysis_cache()
     return result
-
 
 
 # Read logs
@@ -138,10 +138,11 @@ def lasthour_logs():
 
 # Read logs by id range
 
+
 @app.get("/logs/id_range/", tags=["Log"])
 def read_logs_by_id_range(
-    start_id: int = Query(..., ge=0),
-    end_id: int = Query(..., ge=0)
+    start_id: int = Query(default=1, ge=0),
+    end_id: int = Query(default=3, ge=0)
 ):
     log_controller = LogController()
     logs = log_controller.read_logs_by_id_range(start_id, end_id)
