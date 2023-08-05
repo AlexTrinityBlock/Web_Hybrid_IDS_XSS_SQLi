@@ -18,6 +18,18 @@ services:
       TZ: Asia/Taipei
     command: sh run.sh
 
+  ids-frontend:
+    build: ./dockerfiles/ids-frontend
+    image: web_hybrid_ids_xss_sqli_frontend
+    volumes:
+      - "./codes/ids-frontend/build:/app"
+    tty: true
+    ports:
+      - 8080:8080
+    environment:
+      TZ: Asia/Taipei
+    entrypoint: " http-server /app --port 8080 --cors"
+
   postgres:
     image: postgres:15
     ports:
