@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="../favicon.png" />
+		<meta name="viewport" content="width=device-width" />
+		
+		<link href="../_app/immutable/assets/2.7b7327a5.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.08147132.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/scheduler.e108d1fd.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.636962bf.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.0378bb41.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.640a5cb7.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.06801730.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.135cd789.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/4.afbd2af2.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/nav.2f1f221f.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/stores.5e0be1cc.js">
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">  <nav class="navbar navbar-dark bg-dark navbar-expand" data-svelte-h="svelte-c2asxy"><div class="navbar-brand">  
+    <a href="/">Web Hybrid IDS XSS SQLi</a></div> <ul class="navbar-nav mr-auto mt-2 mt-lg-0"><li class="nav-item"><a class="nav-link" href="/">Overview</a></li> <li class="nav-item"><a class="nav-link" href="/analysis">Analysis</a></li> <li class="nav-item"><a data-sveltekit-reload class="nav-link" href="/log/1">Log</a></li> <li class="nav-item"><a class="nav-link" href="/manual-input">ManualInput</a></li></ul> </nav> <div class="container"><div class="col-12"><br> <br> <div class="card log-card-frame"><h1 data-svelte-h="svelte-9cxgp7">Logs</h1> <hr> </div></div></div> <br> <div class="container"><div class="row"><div class="col"><nav aria-label="Page navigation example"><ul class="pagination justify-content-center" id="log-pagination"></ul></nav></div></div></div> <br> 
+			
+			<script>
+				{
+					__sveltekit_143kfjm = {
+						base: new URL("..", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("../_app/immutable/entry/start.08147132.js"),
+						import("../_app/immutable/entry/app.640a5cb7.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 4],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+	<script src="../js/bootstrap.min.js"></script>
+</html>
+
