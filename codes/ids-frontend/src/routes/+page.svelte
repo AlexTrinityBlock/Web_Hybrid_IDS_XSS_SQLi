@@ -11,7 +11,7 @@
     let update = () => {
         updateElement = {};
     };
-    setInterval(update, 5000);
+    setInterval(update, 10000);
 </script>
 
 <Nav />

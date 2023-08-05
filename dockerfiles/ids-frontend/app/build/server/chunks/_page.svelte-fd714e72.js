@@ -15,10 +15,10 @@ const css = {
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let update = () => {
   };
-  setInterval(update, 5e3);
+  setInterval(update, 1e4);
   $$result.css.add(css);
   return `${validate_component(Nav, "Nav").$$render($$result, {}, {}, {})}  <div style="min-height: 500px; display:relative">${validate_component(Ids_chart, "IdsChart").$$render($$result, {}, {}, {})}</div> ${validate_component(Statistics, "Statistics").$$render($$result, {}, {}, {})} `;
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-25a8a37e.js.map
+//# sourceMappingURL=_page.svelte-fd714e72.js.map
