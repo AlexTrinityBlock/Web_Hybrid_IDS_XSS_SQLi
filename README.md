@@ -3,7 +3,8 @@
 This is a self-hosted API based on Tensorflow and FastAPI to detect SQL injection and XSS.
 
 ![alt text](https://raw.githubusercontent.com/AlexTrinityBlock/Web_Hybrid_IDS_XSS_SQLi/master/img/dashboard-1.jpg?raw=true)
-
+![alt text](https://raw.githubusercontent.com/AlexTrinityBlock/Web_Hybrid_IDS_XSS_SQLi/master/img/dashboard-2.jpg?raw=true)
+![alt text](https://raw.githubusercontent.com/AlexTrinityBlock/Web_Hybrid_IDS_XSS_SQLi/master/img/dashboard-3.jpg?raw=true)
 ---
 
 # Setup
