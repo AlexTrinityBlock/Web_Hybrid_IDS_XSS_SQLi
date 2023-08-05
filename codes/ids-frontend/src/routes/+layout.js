@@ -1,5 +1,2 @@
-//Static
-export const prerender = true;
-
 // SPA
-// export const ssr = false;
+export const ssr = false;
