@@ -13,6 +13,7 @@ from tensorflow import keras
 import os
 import time
 from datetime import datetime, timedelta
+from utils.encode_utils import encode_payload_decode
 
 # Set Python Timezone
 time.tzset()
@@ -52,8 +53,9 @@ def read_root():
 
 @app.post("/detect/hybrid/", tags=["IDS"])
 def detect(text: IDSInputFormat):
+    payload_decode = encode_payload_decode(text.text)
     result = ids_model.predict_attack_type(
-        text=text.text, from_ip=text.from_ip)
+        text=payload_decode, from_ip=text.from_ip)
     return result
 
 # Detection SQL injection and XSS with openai api gpt
@@ -61,9 +63,10 @@ def detect(text: IDSInputFormat):
 
 @app.post("/detect/gpt/", tags=["IDS"])
 def detect_gpt(text: IDSInputFormat):
+    payload_decode = encode_payload_decode(text.text)
     gpt_model = GPTModelController()
     result = gpt_model.predict_attack_type(
-        input_text=text.text, from_ip=text.from_ip)
+        input_text=payload_decode, from_ip=text.from_ip)
     return result
 
 # Detection SQL injection and XSS with local model
@@ -71,8 +74,9 @@ def detect_gpt(text: IDSInputFormat):
 
 @app.post("/detect/local/", tags=["IDS"])
 def detect_local(text: IDSInputFormat):
+    payload_decode = encode_payload_decode(text.text)
     result = local_model.predict_attack_type(
-        text=text.text, from_ip=text.from_ip)
+        text=payload_decode, from_ip=text.from_ip)
     return result
 
 # Analysis logs by GPT

@@ -2,6 +2,10 @@ import pandas as pd
 import numpy as np
 import re
 import tensorflow as tf
+import urllib.parse
+import html
+import base64
+import binascii
 
 
 def data2char_index(X, max_len):
@@ -35,3 +39,32 @@ def data_to_symbol_tag(X, max_len):
     X_char = tf.keras.preprocessing.sequence.pad_sequences(np.array(
         result, dtype=object), padding='post', truncating='post', maxlen=max_len)
     return X_char
+
+
+def encode_payload_decode(text: str):
+    old_result: str = text
+    new_result: str = ''
+    while True:
+        new_result = urllib.parse.unquote_to_bytes(old_result).decode('utf-8')
+        new_result = html.unescape(new_result)
+
+        try:
+            new_result = bytes.fromhex(new_result).decode('utf-8')
+        except ValueError:
+            pass
+        
+        try:
+            new_result = base64.b64decode(new_result)
+        except binascii.Error:
+            pass
+        except  ValueError:
+            pass
+
+        print('\n\n\n =====Encode Result=====')
+        print('Old', old_result)
+        print('New', new_result)
+        if new_result == old_result:
+            break
+        else:
+            old_result = new_result
+    return new_result
